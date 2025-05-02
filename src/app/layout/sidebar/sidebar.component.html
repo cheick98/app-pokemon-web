@@ -1,0 +1,26 @@
+<aside class="bg-sidebar h-screen w-65 p-2.5 overflow-y-auto">
+    <div class="text-white">
+        <!-- logo -->
+        <div class="flex items-center justify-between gap-2 p-2 mb-2.5 rounded-lg">
+            <div class="flex items-center gap-2">
+                <img src="/images/logo.png" alt="Logo de pokémon" class="size-8" />
+                <h1 class="uppercase font-bold text-2xl">Pokemon</h1>
+            </div>
+            <img src="/icons/menu.png" alt="Logo de pokémon" class="size-7 cursor-pointer" />
+        </div>
+
+        <ul>
+            @for (item of items; track item.route; let i=$index, isLast=$last) {
+            <li [class.mb-2]="!isLast">
+                <a [routerLink]="item.route" routerLinkActive="router-link-active"
+                    class="group flex items-center gap-1.25 p-2 rounded-lg hover:bg-main">
+                    <img [src]="item.icon" alt="Icon de pokémon" class="size-8" />
+                    <span
+                        [ngClass]="{'text-white': isRouteActive(item.route), 'text-custom-white': !isRouteActive(item.route)}"
+                        class="font-bold group-hover:text-white">{{item.name}}</span>
+                </a>
+            </li>
+            }
+        </ul>
+    </div>
+</aside>

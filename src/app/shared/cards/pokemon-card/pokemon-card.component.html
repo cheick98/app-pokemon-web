@@ -1,0 +1,12 @@
+<div (click)="goToDetail()" class="bg-white p-2 border border-gray-200 rounded-10 hover:shadow-md cursor-pointer"
+    [style.--color-pokemon]="pokemon().couleur">
+    <div
+        class="size-40 relative before:content-[''] before:absolute before:inset-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:size-29 before:z-0 before:bg-[var(--color-pokemon)] before:rounded-full">
+        <img [src]="pokemon().imageUrl" alt="Image du pokémon" class="size-full relative z-10" />
+    </div>
+
+    <div class="flex items-center justify-between flex-wrap gap-2.5">
+        <h2 class="text-15 font-bold">{{pokemon().nom}}</h2>
+        <span class="text-14">#{{pokemon().numero}}</span>
+    </div>
+</div>

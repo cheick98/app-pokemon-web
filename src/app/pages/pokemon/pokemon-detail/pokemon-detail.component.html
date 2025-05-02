@@ -1,0 +1,148 @@
+<div class="flex justify-center pb-5" [style.--color-pokemon]="pokemon()?.couleur">
+    @if (loading()) {
+    <app-loading />
+    }@else {
+    <div class="w-212.5">
+        <!-- information sur le pokemon -->
+        <div
+            class="bg-white w-full flex items-center justify-between flex-wrap gap-2.5 p-5 border border-gray-200 rounded-10 mb-5">
+            <div
+                class="size-100 relative before:content-[''] before:absolute before:inset-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:size-72 before:z-0 before:bg-[var(--color-pokemon)] before:rounded-full">
+                <img [src]="pokemon()?.imageUrl" alt="Image du pokémon" class="size-full relative z-10" />
+            </div>
+
+            <div class="w-95">
+                <!-- title -->
+                <div class="">
+                    <div class="flex items-center justify-between">
+                        <h1 class="font-bold text-36 uppercase">{{pokemon()?.nom}}</h1>
+                        <span class="text-20">#{{pokemon()?.numero}}</span>
+                    </div>
+                    <div class="flex items-center gap-2.5">
+                        @for (type of pokemon()?.types; track type) {
+                        <span [style.background-color]="getColorByType(type, 'types')"
+                            class="text-white px-3 py-0.5 rounded-5">{{type}}</span>
+                        }
+                    </div>
+                </div>
+
+                <!-- description -->
+                <div class="my-4">
+                    <div class="flex items-center gap-2.5 mb-1.25">
+                        <h3 class="text-18">Versions : </h3>
+                        <img src="/icons/pokeball.png" alt="Icon pokeball 1" (click)="choosePokeball('1')"
+                            [ngClass]="{ 'border-3 border-desc1 rounded-full': pokeball() === '1' }"
+                            class="size-7.5 cursor-pointer" />
+                        <img src="/icons/pokeball1.png" alt="Icon pokeball 1" (click)="choosePokeball('2')"
+                            [ngClass]="{ 'border-3 border-desc2 rounded-full': pokeball() === '2' }"
+                            class="size-7.5 cursor-pointer" />
+                    </div>
+
+                    <p class="">{{ pokeball() === '1' ? pokemon()?.description1 : pokemon()?.description2 }}</p>
+                </div>
+
+                <!-- information -->
+                <div class="h-46.75 w-full mb-4">
+                    @if (!openInfo()) {
+                    <div class="bg-desc1 flex items-center justify-between flex-wrap gap-1.25 p-2.5 rounded-10">
+                        <div class="basis-[49%] flex flex-col">
+                            <span class="text-16 text-white">Taille</span>
+                            <span class="text-20">{{pokemon()?.taille}} m</span>
+                        </div>
+                        <div class="basis-[49%] flex flex-col">
+                            <span class="text-16 text-white">Catégorie</span>
+                            <span class="text-20">{{pokemon()?.categorie}}</span>
+                        </div>
+                        <div class="basis-[49%] flex flex-col">
+                            <span class="text-16 text-white">Poids</span>
+                            <span class="text-20">{{pokemon()?.poids}} kg</span>
+                        </div>
+                        <div class="basis-[49%] flex flex-col">
+                            <span class="text-16 text-white">Talent</span>
+                            @for (talent of pokemon()?.talents; track talent.titre) {
+                            <div class="flex items-center gap-2.5">
+                                <span class="text-20">{{talent.titre}}</span>
+                                <img src="/icons/info.png" alt="Icon info" class="size-5 cursor-pointer"
+                                    (click)="setOpenInfo(talent)" />
+                            </div>
+                            }
+                        </div>
+                        <div class="basis-[49%] flex flex-col">
+                            <span class="text-16 text-white">Sexe</span>
+                            <div class="flex items-center gap-2.5">
+                                <img src="/icons/male.png" alt="Icon de male" class="size-6.25" />
+                                <img src="/icons/female.png" alt="Icon de female" class="size-6.25" />
+                            </div>
+                        </div>
+                    </div>
+                    }@else {
+                    <div class="bg-custom-black size-full p-2.5 rounded-10">
+                        <div class="flex items-center justify-between mb-1.25">
+                            <span class="text-custom-white">Infos sur les talents</span>
+                            <img src="/icons/close.png" alt="Icon de fermeture des infos du talent"
+                                class="size-8 cursor-pointer" (click)="openInfo.set(false)" />
+                        </div>
+                        <div>
+                            <h3 class="text-24 text-white">{{talentSelected()?.titre}}</h3>
+                            <p class="text-white">{{talentSelected()?.description}}</p>
+                        </div>
+                    </div>
+                    }
+                </div>
+
+                <!-- faiblesses -->
+                <div>
+                    <h3 class="text-22 font-bold">Faiblesses</h3>
+                    <div class="flex items-center flex-wrap gap-2.5">
+                        @for (type of pokemon()?.faiblesses; track type) {
+                        <span [style.background-color]="getColorByType(type, 'faiblesses')"
+                            class="text-white px-3 py-0.5 rounded-5">{{type}}</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- evolution -->
+        <div class="bg-[url('/images/bg_evolution.png')] bg-cover bg-center p-2.5 rounded-10">
+            <h2 class="text-custom-white mb-2.5">Évolutions</h2>
+
+            <div class="flex items-center justify-around flex-wrap">
+                <div (click)="goToDetail(pokemon()?.evolutions?.precedent)" class="cursor-pointer">
+                    <img [src]="'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/' + pokemon()?.evolutions?.precedent + '.png'"
+                        alt="Image du pokemon" class="size-30 p-2.5 border-4 border-white rounded-full" />
+
+                    <div class="flex items-center justify-center gap-1.25 mt-1.25">
+                        <h3 class="text-12 text-white">Pokémon: </h3>
+                        <span class="text-10 text-custom-white">#{{pokemon()?.evolutions?.precedent}}</span>
+                    </div>
+                </div>
+
+                <img src="/icons/arrow.png" alt="Fleche superieure" />
+
+                <div (click)="goToDetail(pokemon()?.evolutions?.courant)" class="cursor-pointer">
+                    <img [src]="'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/' + pokemon()?.evolutions?.courant + '.png'"
+                        alt="Image du pokemon" class="size-30 p-2.5 border-4 border-white rounded-full" />
+
+                    <div class="flex items-center justify-center gap-1.25 mt-1.25">
+                        <h3 class="text-12 text-white">Pokémon: </h3>
+                        <span class="text-10 text-custom-white">#{{pokemon()?.evolutions?.courant}}</span>
+                    </div>
+                </div>
+
+                <img src="/icons/arrow.png" alt="Fleche superieure" />
+
+                <div (click)="goToDetail(pokemon()?.evolutions?.suivant)" class="cursor-pointer">
+                    <img [src]="'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/' + pokemon()?.evolutions?.suivant + '.png'"
+                        alt="Image du pokemon" class="size-30 p-2.5 border-4 border-white rounded-full" />
+
+                    <div class="flex items-center justify-center gap-1.25 mt-1.25">
+                        <h3 class="text-12 text-white">Pokémon: </h3>
+                        <span class="text-10 text-custom-white">#{{pokemon()?.evolutions?.suivant}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>

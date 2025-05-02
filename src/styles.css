@@ -1,0 +1,55 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
+
+@font-face {
+    font-family: "Roboto";
+    src: url(./assets/fonts/Roboto-Regular.ttf);
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: url(./assets/fonts/Poppins-Regular.ttf);
+}
+
+@font-face {
+    font-family: "Flexo";
+    src: url(./assets/fonts/Flexo-Regular.ttf);
+}
+
+* {
+    font-family: Flexo, Poppins, Roboto, Ubuntu, Palanquin, Arial, Helvetica, serif;
+}
+
+@theme {
+    --width-500: 550px;
+
+    --color-main: #E64C3C;
+    --color-main2: #F2F2F2;
+    --color-desc1: #0072B0;
+    --color-desc2: #dd2d51;
+    --color-custom-black: #030712;
+    --color-custom-white: #E0E4E8;
+
+    --text-10: 10px;
+    --text-11: 11px;
+    --text-12: 12px;
+    --text-13: 13px;
+    --text-14: 14px;
+    --text-15: 15px;
+    --text-16: 16px;
+    --text-18: 18px;
+    --text-20: 20px;
+    --text-22: 22px;
+    --text-22: 22px;
+    --text-24: 24px;
+    --text-36: 36px;
+
+    --radius-5: 5px;
+    --radius-10: 10px;
+
+    --shadow-custom: 0 2px 5px var(--color-gray-300);
+}
+
+.router-link-active {
+    @apply bg-main;
+}
