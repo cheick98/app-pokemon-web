@@ -1,14 +1,20 @@
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
-import { HeaderComponent } from "./layout/header/header.component";
+// my importations
+import { LoginService } from './core/services/login.service'
+import { HeaderComponent } from './layout/header/header.component'
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent],
+  styleUrl: './app.component.css',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  imports: [RouterOutlet, HeaderComponent],
 })
 
 export class AppComponent {
+  private loginService = inject(LoginService)
 
+  constructor() {
+    this.loginService.initializeUserFromStorage()
+  }
 }

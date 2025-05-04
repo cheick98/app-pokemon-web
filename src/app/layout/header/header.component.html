@@ -1,7 +1,8 @@
+@if (user()){
 <div class="bg-white w-full flex items-center justify-center flex-wrap gap-10 fixed p-5 z-100">
     <img src="/images/logo.png" alt="Logo du site" class="size-12.5 cursor-pointer" (click)="goToHome()" />
 
-    <div class="w-208 flex items-center justify-center flex-wrap gap-2.5">
+    <div class="w-212.5 flex items-center justify-center flex-wrap gap-2.5">
         <div
             class="grow flex items-center py-2 border border-gray-300 rounded-lg focus-within:border-blue-500 transition-colors duration-200">
             <input type="text" placeholder="Rechercher..."
@@ -9,14 +10,16 @@
             <img src="/icons/search.png" alt="Icon de recherche" class="size-7.5 mx-2.5" />
         </div>
 
-        <div class="flex items-center gap-2.5">
+        <!-- <div class="flex items-center gap-2.5">
             <div class=" h-12.5 flex items-center gap-1.25 px-4 py-2 border border-gray-300 rounded-lg cursor-pointer"
                 (click)="goToAddPokemon()">
                 <img src="/icons/add.png" alt="Icon de recherche" class="size-8" />
                 <span class="text-gray-600 text-lg">Ajouter</span>
             </div>
-        </div>
+        </div> -->
     </div>
 
-    <img src="/icons/logout.png" alt="Icon de logout" title="Déconnexion" class="size-12.5 cursor-pointer" />
+    <img src="/icons/logout.png" alt="Icon de logout" title="Déconnexion" (click)="logout()"
+        class="size-12.5 cursor-pointer" />
 </div>
+}

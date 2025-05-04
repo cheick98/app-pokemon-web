@@ -1,5 +1,211 @@
-<div class="flex justify-center pb-5">
-    <div class="w-212.5 bg-red-500">
-        <p>pokemon-add works!</p>
-    </div>
-</div>
+<app-single-container>
+    <form (submit)="handleSubmit($event)" [formGroup]="formGroup" class="bg-white p-5 rounded-10">
+
+        <div class="flex items-center justify-between flex-wrap gap-4 mb-2.5">
+
+            <!-- numero -->
+            <div class="h-23.75 basis-[49%] flex flex-col gap-1.25">
+                <label for="numero" class="font-bold text-14">Numéro <span class="text-red-500">*</span></label>
+                <input type="text" id="numero" formControlName="numero" class="input" />
+                <span class="text-12 text-red-700">Champ est requis</span>
+            </div>
+
+            <!-- nom -->
+            <div class="h-23.75 basis-[49%] flex flex-col gap-1.25">
+                <label for="nom" class="font-bold text-14">Nom <span class="text-red-500">*</span></label>
+                <input type="text" id="nom" formControlName="nom" class="input" />
+                <span class="text-12 text-red-700">Champ est requis</span>
+            </div>
+
+            <!-- couleur -->
+            <div class="h-23.75 basis-[49%] flex flex-col gap-1.25">
+                <label for="couleur" class="font-bold text-14">Couleur <span class="text-red-500">*</span></label>
+                <input type="text" id="couleur" formControlName="couleur" class="input" />
+                <span class="text-12 text-red-700">Champ est requis</span>
+            </div>
+
+            <!-- generation -->
+            <div class="h-23.75 basis-[49%] flex flex-col gap-1.25">
+                <label for="generation" class="font-bold text-14">Génération <span class="text-red-500">*</span></label>
+                <select id="generation" formControlName="generation" class="select">
+                    <option value="" disabled selected hidden>Choisir une génération</option>
+                    <option *ngFor="let gen of generations" [value]="gen">{{gen}}</option>
+                </select>
+                <span class="text-12 text-red-700">Champ est requis</span>
+            </div>
+
+            <!-- description1 -->
+            <div class="h-37 basis-[49%] flex flex-col gap-1.25">
+                <label for="description1" class="font-bold text-14">Description principale <span
+                        class="text-red-500">*</span></label>
+                <textarea type="text" id="description1" formControlName="description1"
+                    class="input textarea"></textarea>
+                <span class="text-12 text-red-700">Champ est requis</span>
+            </div>
+
+            <!-- description2 -->
+            <div class="h-37 basis-[49%] flex flex-col gap-1.25">
+                <label for="description2" class="font-bold text-14">Description secondaire <span
+                        class="text-red-500">*</span></label>
+                <textarea type="text" id="description2" formControlName="description2"
+                    class="input textarea"></textarea>
+                <span class="text-12 text-red-700">Champ est requis</span>
+            </div>
+
+            <!-- taille, categorie, poids -->
+            <div class="w-full flex items-center justify-between">
+                <!-- taille -->
+                <div class="h-23.75 basis-[32%] flex flex-col gap-1.25">
+                    <label for="taille" class="font-bold text-14">Taille <span class="text-red-500">*</span></label>
+                    <input type="text" id="taille" formControlName="taille" class="input" />
+                    <span class="text-12 text-red-700">Champ est requis</span>
+                </div>
+
+                <!-- categorie -->
+                <div class="h-23.75 basis-[32%] flex flex-col gap-1.25">
+                    <label for="categorie" class="font-bold text-14">Catégorie <span
+                            class="text-red-500">*</span></label>
+                    <input type="text" id="categorie" formControlName="categorie" class="input" />
+                    <span class="text-12 text-red-700">Champ est requis</span>
+                </div>
+
+                <!-- poids -->
+                <div class="h-23.75 basis-[32%] flex flex-col gap-1.25">
+                    <label for="poids" class="font-bold text-14">Poids <span class="text-red-500">*</span></label>
+                    <input type="text" id="poids" formControlName="poids" class="input" />
+                    <span class="text-12 text-red-700">Champ est requis</span>
+                </div>
+            </div>
+
+            <!-- Talents -->
+            <div>
+                <!-- Ajout de talents -->
+                <div class="space-y-4">
+                    <button (click)="addTalentGroup()" class="bg-blue-500 text-white px-3 py-1 rounded">Ajouter un
+                        talent</button>
+
+                    <div *ngFor="let control of talentsArray.controls; let i = index" [formGroup]="asFormGroup(control)"
+                        class="border p-4 rounded">
+                        <input type="text" formControlName="titre" placeholder="Titre du talent"
+                            class="input mb-2 w-full" />
+                        <input type="text" formControlName="description" placeholder="Description"
+                            class="input mb-2 w-full" />
+
+                        <div class="flex gap-2">
+                            <button (click)="saveTalent(i)"
+                                class="bg-green-500 text-white px-2 py-1 rounded">Sauvegarder</button>
+                            <button (click)="removeTalentGroup(i)"
+                                class="bg-red-500 text-white px-2 py-1 rounded">Annuler</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Talents enregistrés -->
+                <div class="mt-6">
+                    <h3 class="font-bold mb-2">Talents enregistrés</h3>
+
+                    <p *ngIf="savedTalentsList.length === 0" class="text-red-500 text-sm">
+                        Aucun talent n’a été enregistré. Veuillez en ajouter au moins un.
+                    </p>
+
+                    <ul *ngIf="savedTalentsList.length > 0" class="space-y-2">
+                        <li *ngFor="let talent of savedTalentsList; let i = index"
+                            class="bg-gray-100 p-3 rounded flex justify-between">
+                            <div>
+                                <p class="font-semibold">{{ talent.get('titre')?.value }}</p>
+                                <p class="text-sm text-gray-700">{{ talent.get('description')?.value }}</p>
+                            </div>
+                            <button (click)="deleteSavedTalent(i)" class="text-red-500 font-semibold">Supprimer</button>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- types -->
+            <div class="flex flex-col gap-2">
+                <label class="font-bold text-18 uppercase">Types <span class="text-red-500">*</span></label>
+                <div class="flex items-center flex-wrap gap-5">
+                    <label *ngFor="let type of pokemonTypes" class="flex items-center gap-1.25 cursor-pointer">
+                        <input type="checkbox" [value]="type" (change)="onCheckboxChange($event, 'types')"
+                            [checked]="formTypes.value.includes(type)" class="accent-blue-500" />
+                        <span class="px-2 py-1 rounded-full text-white"
+                            [ngStyle]="{ backgroundColor: typeColors[type].couleur}">{{ type }}</span>
+                    </label>
+                </div>
+
+                <!-- Types sélectionnés -->
+                <div *ngIf="formTypes.value.length > 0" class="flex flex-wrap gap-1.5 mt-2">
+                    <span *ngFor="let t of formTypes.value" class="text-white text-sm px-2 py-1 rounded-full"
+                        [ngStyle]="{ backgroundColor: typeColors[t].couleur}">
+                        {{ t }}
+                    </span>
+                </div>
+
+                <span class="text-12 text-red-700">
+                    Au moins un type doit être sélectionné
+                </span>
+            </div>
+
+            <!-- Faiblesses -->
+            <div class="flex flex-col gap-2 mt-5">
+                <label class="font-bold text-18 uppercase">Faiblesses <span class="text-red-500">*</span></label>
+                <div class="flex items-center flex-wrap gap-5">
+                    <label *ngFor="let type of pokemonTypes" class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" [value]="type" (change)="onCheckboxChange($event, 'faiblesses')"
+                            [checked]="formFaiblesses.value.includes(type)" class="accent-red-500" />
+                        <span class="px-2 py-1 rounded-full text-white"
+                            [ngStyle]="{ backgroundColor: typeColors[type].couleur}">
+                            {{ type }}
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Faiblesses sélectionnées -->
+                <div *ngIf="formFaiblesses.value.length" class="flex flex-wrap gap-1.5 mt-2">
+                    <span *ngFor="let f of formFaiblesses.value" class="text-white text-sm px-2 py-1 rounded-full"
+                        [ngStyle]="{ backgroundColor: typeColors[f].couleur}">
+                        {{ f }}
+                    </span>
+                </div>
+                <span *ngIf="formFaiblesses.invalid && formFaiblesses.touched" class="text-12 text-red-700">
+                    Au moins une faiblesse doit être sélectionnée
+                </span>
+            </div>
+
+            <!-- evolutions -->
+            <div formGroupName="evolutions" class="w-full">
+                <h3 class="text-18 font-bold uppercase">Évolutions</h3>
+
+                <!-- precedent, courant, suivant -->
+                <div class="flex items-center justify-between">
+                    <!-- precedent -->
+                    <div class="h-23.75 basis-[32%] flex flex-col gap-1.25">
+                        <label for="precedent" class="font-bold text-14">Précédent <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" id="precedent" formControlName="precedent" class="input" />
+                        <span class="text-12 text-red-700">Champ est requis</span>
+                    </div>
+
+                    <!-- courant -->
+                    <div class="h-23.75 basis-[32%] flex flex-col gap-1.25">
+                        <label for="courant" class="font-bold text-14">Courant <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" id="courant" formControlName="courant" class="input" />
+                        <span class="text-12 text-red-700">Champ est requis</span>
+                    </div>
+
+                    <!-- suivant -->
+                    <div class="h-23.75 basis-[32%] flex flex-col gap-1.25">
+                        <label for="suivant" class="font-bold text-14">Suivant <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" id="suivant" formControlName="suivant" class="input" />
+                        <span class="text-12 text-red-700">Champ est requis</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="cursor-pointer">Envoyer</button>
+    </form>
+</app-single-container>

@@ -7,7 +7,6 @@
         "**/Thumbs.db": true,
         ".vscode": true,
         "node_modules": true,
-        ".gitignore": true,
         "README.md": true,
         "tsconfig.app.json": true,
         "tsconfig.json": true,
@@ -16,7 +15,6 @@
     "hide-files.files": [
         ".vscode",
         "node_modules",
-        ".gitignore",
         "README.md",
         "tsconfig.app.json",
         "tsconfig.json",

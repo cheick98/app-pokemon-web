@@ -1,0 +1,10 @@
+<div class="h-23.75 flex flex-col gap-1.25">
+    <div class="flex items-center gap-1.25">
+        <label [for]="id()" class="font-bold">{{inputName()}}</label>
+        <span class="text-red-500">{{required() && '*'}}</span>
+    </div>
+    <input [type]="type()" [name]="id()" [id]="id()" [placeholder]="placeholder() || inputName()"
+        [formControlName]="id()"
+        class="text-gray-400 pl-2.5 py-2 outline-none border border-gray-300 rounded-lg focus:border-blue-500 focus:pl-4 transition-[padding-left,border-color] duration-200 ease-in-out" />
+    @if (error()) { <span class="text-12 text-red-700">{{error()}}</span> }
+</div>

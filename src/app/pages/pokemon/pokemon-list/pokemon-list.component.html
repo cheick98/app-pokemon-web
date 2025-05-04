@@ -1,9 +1,25 @@
-<div class="flex items-center justify-center flex-wrap gap-2.5">
-    @if(loading()){
-    <app-loading />
-    }@else {
-    @for (pokemon of pokemons(); track pokemon.numero) {
-    <app-pokemon-card [pokemon]="pokemon" />
-    }
-    }
+<div class="flex items-center justify-center">
+    <div class="w-212.5">
+        <div class="flex items-center justify-between flex-wrap gap-2.5">
+            @if(loading()){
+            <app-loading />
+            } @else {
+            @for (pokemon of pokemons().slice(0, visibleCount()); track pokemon.numero) {
+            <app-pokemon-card [pokemon]="pokemon" />
+            }
+            }
+        </div>
+
+        <!-- Bouton "Voir plus" -->
+        @if(pokemons().length > visibleCount()) {
+        <div class="flex justify-center mt-5">
+            <button (click)="loadMore()"
+                class="h-10 w-58.75 bg-main flex items-center justify-center text-white px-4 py-2 rounded-lg cursor-pointer">
+                @if(isLoadingMore()){
+                <img src="/gifs/loading.gif" alt="Gif du loading" class="size-4" />
+                }@else {Charger d'autres Pokémons}
+            </button>
+        </div>
+        }
+    </div>
 </div>

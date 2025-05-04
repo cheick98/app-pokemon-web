@@ -1,7 +1,6 @@
-import { Component, effect, inject } from '@angular/core'
+import { Component, effect, inject, signal } from '@angular/core'
 // my importations
 import { PokemonService } from '../../../core/services/pokemon.service'
-import { HeaderComponent } from '../../../layout/header/header.component'
 import { LoadingComponent } from '../../../shared/components/loading/loading.component'
 import { PokemonCardComponent } from '../../../shared/cards/pokemon-card/pokemon-card.component'
 
@@ -19,6 +18,9 @@ export class PokemonListComponent {
   readonly loading = this.pokemonService.loading
   readonly error = this.pokemonService.error
 
+  visibleCount = signal(12)
+  isLoadingMore = signal(false)
+
   constructor() {
     // Déclenche le chargement une fois lors de l'initialisation
     effect(() => {
@@ -26,5 +28,14 @@ export class PokemonListComponent {
         this.pokemonService.getAllPokemons().subscribe()
       }
     })
+  }
+
+  loadMore() {
+    this.isLoadingMore.set(true)
+
+    setTimeout(() => {
+      this.visibleCount.update((pred) => pred + 12)
+      this.isLoadingMore.set(false)
+    }, 500);
   }
 }

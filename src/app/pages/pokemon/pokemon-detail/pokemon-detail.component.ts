@@ -47,13 +47,11 @@ export class PokemonDetailComponent {
   })
 
   constructor() {
-    effect(() => {
-      this.openInfo.set(false)
-      this.talentSelected.set(null)
+    this.openInfo.set(false)
+    this.talentSelected.set(null)
 
-      const numero = this.numeroPokemon()
-      if (numero) this.pokemonService.getPokemonById(numero).subscribe()
-    })
+    const numero = this.numeroPokemon()
+    if (numero) this.pokemonService.getPokemonById(numero).subscribe()
   }
 
   choosePokeball(choice: '1' | '2') { this.pokeball.set(choice) }

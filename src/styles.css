@@ -53,3 +53,15 @@
 .router-link-active {
     @apply bg-main;
 }
+
+.input {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors duration-200;
+}
+
+.select {
+    @apply w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors duration-200;
+}
+
+.textarea {
+    @apply h-24 resize-none;
+}

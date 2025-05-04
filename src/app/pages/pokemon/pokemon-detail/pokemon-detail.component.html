@@ -42,7 +42,7 @@
                 </div>
 
                 <!-- information -->
-                <div class="h-46.75 w-full mb-4">
+                <div class="h-54.25 w-full mb-4">
                     @if (!openInfo()) {
                     <div class="bg-desc1 flex items-center justify-between flex-wrap gap-1.25 p-2.5 rounded-10">
                         <div class="basis-[49%] flex flex-col">
@@ -60,10 +60,9 @@
                         <div class="basis-[49%] flex flex-col">
                             <span class="text-16 text-white">Talent</span>
                             @for (talent of pokemon()?.talents; track talent.titre) {
-                            <div class="flex items-center gap-2.5">
+                            <div (click)="setOpenInfo(talent)" class="flex items-center gap-2.5 cursor-pointer">
                                 <span class="text-20">{{talent.titre}}</span>
-                                <img src="/icons/info.png" alt="Icon info" class="size-5 cursor-pointer"
-                                    (click)="setOpenInfo(talent)" />
+                                <img src="/icons/info.png" alt="Icon info" class="size-5" />
                             </div>
                             }
                         </div>
@@ -104,21 +103,25 @@
         </div>
 
         <!-- evolution -->
-        <div class="bg-[url('/images/bg_evolution.png')] bg-cover bg-center p-2.5 rounded-10">
+        <div class="bg-[url('/images/bg_evolution.png')] bg-cover bg-center p-5 rounded-10">
             <h2 class="text-custom-white mb-2.5">Évolutions</h2>
 
             <div class="flex items-center justify-around flex-wrap">
-                <div (click)="goToDetail(pokemon()?.evolutions?.precedent)" class="cursor-pointer">
-                    <img [src]="'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/' + pokemon()?.evolutions?.precedent + '.png'"
-                        alt="Image du pokemon" class="size-30 p-2.5 border-4 border-white rounded-full" />
+                @if(pokemon()?.evolutions?.precedent){
+                <ng-container>
+                    <div (click)="goToDetail(pokemon()?.evolutions?.precedent)" class="cursor-pointer">
+                        <img [src]="'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/' + pokemon()?.evolutions?.precedent + '.png'"
+                            alt="Image du pokemon" class="size-30 p-2.5 border-4 border-white rounded-full" />
 
-                    <div class="flex items-center justify-center gap-1.25 mt-1.25">
-                        <h3 class="text-12 text-white">Pokémon: </h3>
-                        <span class="text-10 text-custom-white">#{{pokemon()?.evolutions?.precedent}}</span>
+                        <div class="flex items-center justify-center gap-1.25 mt-1.25">
+                            <h3 class="text-12 text-white">Pokémon: </h3>
+                            <span class="text-10 text-custom-white">#{{pokemon()?.evolutions?.precedent}}</span>
+                        </div>
                     </div>
-                </div>
 
-                <img src="/icons/arrow.png" alt="Fleche superieure" />
+                    <img src="/icons/arrow.png" alt="Fleche superieure" />
+                </ng-container>
+                }
 
                 <div (click)="goToDetail(pokemon()?.evolutions?.courant)" class="cursor-pointer">
                     <img [src]="'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/' + pokemon()?.evolutions?.courant + '.png'"
@@ -130,17 +133,21 @@
                     </div>
                 </div>
 
-                <img src="/icons/arrow.png" alt="Fleche superieure" />
+                @if (pokemon()?.evolutions?.suivant) {
+                <ng-container>
+                    <img src="/icons/arrow.png" alt="Fleche superieure" />
 
-                <div (click)="goToDetail(pokemon()?.evolutions?.suivant)" class="cursor-pointer">
-                    <img [src]="'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/' + pokemon()?.evolutions?.suivant + '.png'"
-                        alt="Image du pokemon" class="size-30 p-2.5 border-4 border-white rounded-full" />
+                    <div (click)="goToDetail(pokemon()?.evolutions?.suivant)" class="cursor-pointer">
+                        <img [src]="'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/' + pokemon()?.evolutions?.suivant + '.png'"
+                            alt="Image du pokemon" class="size-30 p-2.5 border-4 border-white rounded-full" />
 
-                    <div class="flex items-center justify-center gap-1.25 mt-1.25">
-                        <h3 class="text-12 text-white">Pokémon: </h3>
-                        <span class="text-10 text-custom-white">#{{pokemon()?.evolutions?.suivant}}</span>
+                        <div class="flex items-center justify-center gap-1.25 mt-1.25">
+                            <h3 class="text-12 text-white">Pokémon: </h3>
+                            <span class="text-10 text-custom-white">#{{pokemon()?.evolutions?.suivant}}</span>
+                        </div>
                     </div>
-                </div>
+                </ng-container>
+                }
             </div>
         </div>
     </div>

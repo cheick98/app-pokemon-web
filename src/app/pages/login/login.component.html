@@ -1,0 +1,31 @@
+<app-single-container>
+    <form [formGroup]="loginFormGroup" (submit)="handleSubmit()" class="bg-white p-5 rounded-10">
+        <h3 class="text-20 font-bold uppercase text-center">Connexion</h3>
+
+        <div class="flex items-center justify-center my-5">
+            <div class="bg-gray-300  flex items-center justify-center gap-10 p-2.5 rounded-lg">
+                <h4 class="font-bold">Nom d'utilisateur : admin</h4>
+                <h4 class="font-bold">Mot de passe : 123456</h4>
+            </div>
+        </div>
+
+        <div class="mb-5">
+            <label for="username" class="text-14 font-bold">Nom d'utilisateur</label>
+            <input type="text" id="username" class="input" formControlName="username" />
+        </div>
+
+        <div class="mb-5">
+            <label for="password" class="text-14 font-bold">Mot de passe</label>
+            <input type="password" id="password" class="input" formControlName="password" />
+        </div>
+
+        <div class="h-6 text-center my-2.5">
+            @if (error()) {<span class="text-red-500">{{error()}}</span>}
+        </div>
+
+        <button type="submit" [disabled]="loading()"
+            class="bg-main h-11 w-full flex items-center justify-center text-white p-2.5 rounded-10 cursor-pointer">
+            @if(loading()){ <img src="/gifs/loading.gif" alt="Gif du loading" class="size-4" /> }@else {Se connecter}
+        </button>
+    </form>
+</app-single-container>
