@@ -2,11 +2,11 @@
 <div class="bg-white w-full flex items-center justify-center flex-wrap gap-10 fixed p-5 z-100">
     <img src="/images/logo.png" alt="Logo du site" class="size-12.5 cursor-pointer" (click)="goToHome()" />
 
-    <div class="w-212.5 flex items-center justify-center flex-wrap gap-2.5">
+    <div (click)="setIsOpen()" class="w-212.5 flex items-center justify-center flex-wrap gap-2.5 cursor-pointer">
         <div
             class="grow flex items-center py-2 border border-gray-300 rounded-lg focus-within:border-blue-500 transition-colors duration-200">
             <input type="text" placeholder="Rechercher..."
-                class="w-full text-gray-400 px-3 py-1 outline-none border-r border-r-gray-300" />
+                class="w-full text-gray-400 px-3 py-1 outline-none border-r border-r-gray-300 cursor-pointer" />
             <img src="/icons/search.png" alt="Icon de recherche" class="size-7.5 mx-2.5" />
         </div>
 
@@ -22,4 +22,35 @@
     <img src="/icons/logout.png" alt="Icon de logout" title="Déconnexion" (click)="logout()"
         class="size-12.5 cursor-pointer" />
 </div>
+
+@if (isOpen()) {
+<!-- modal -->
+<div class="fixed top-0 left-0 z-100 h-screen w-screen flex items-start justify-center">
+    <!-- overlay -->
+    <div (click)="setIsOpen()" class="bg-black opacity-50 fixed z-100 size-full"></div>
+
+    <div class="bg-white w-212.5 z-200 p-5 my-5 rounded-lg">
+        <!-- search -->
+        <div class="w-full flex items-center justify-center flex-wrap gap-2.5">
+            <div
+                class="grow flex items-center py-2 border border-gray-300 rounded-lg focus-within:border-blue-500 transition-colors duration-200">
+                <input type="text" placeholder="Rechercher..." [formControl]="search"
+                    class="w-full text-custom-black px-3 py-1 outline-none border-r border-r-gray-300" />
+                <img src="/icons/search.png" alt="Icon de recherche" class="size-7.5 mx-2.5" />
+            </div>
+        </div>
+
+        <!-- liste des pokemons -->
+        <div class="mt-5 max-h-[calc(85vh-100px)] flex items-center flex-wrap gap-2.5 overflow-y-auto">
+            @for (pokemon of searchResults$ | async; track pokemon.numero) {
+            <div class="cursor-pointer flex items-center gap-2.5 bg-gray-300 p-2 rounded-lg"
+                (click)="goToDetail(pokemon.numero)">
+                <h3 class="text-custom-black">{{pokemon.nom}}</h3>
+                <span>#{{pokemon.numero}}</span>
+            </div>
+            }
+        </div>
+    </div>
+</div>
+}
 }

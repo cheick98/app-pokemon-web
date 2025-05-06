@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core'
+import { Component, inject, signal } from '@angular/core'
 // my importations
 import { PokemonService } from '../../../core/services/pokemon.service'
 import { LoadingComponent } from '../../../shared/components/loading/loading.component'
@@ -22,12 +22,9 @@ export class PokemonListComponent {
   isLoadingMore = signal(false)
 
   constructor() {
-    // Déclenche le chargement une fois lors de l'initialisation
-    effect(() => {
-      if (!this.pokemons().length) {
-        this.pokemonService.getAllPokemons().subscribe()
-      }
-    })
+    if (!this.pokemons().length) {
+      this.pokemonService.getAllPokemons().subscribe()
+    }
   }
 
   loadMore() {

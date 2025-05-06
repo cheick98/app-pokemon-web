@@ -447,4 +447,58 @@ export const data: IPokemon[] = [
             courant: '028',
         }
     },
+    {
+        numero: '029', nom: 'Nidoran', couleur: '#C0CEEA', generation: 1,
+        imageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/029.png',
+        description1: `Son odorat est plus développé que celui du mâle. Quand Nidoran♀ cherche à manger, il reste dans le sens du vent, qu’il détecte avec ses vibrisses`,
+        description2: `Ce Pokémon se nourrit de Baies en les ouvrant avec ses incisives. Le bout de sa corne est plus arrondi que celui du mâle`,
+        taille: '0.4', categorie: 'Vénépic', poids: '7.0',
+        talents: [
+            { titre: 'Point Poison', description: 'Peut empoisonner l’attaquant lorsque le Pokémon subit une attaque directe' },
+            { titre: 'Rivalité', description: 'Le Pokémon déteste la concurrence et inflige plus de dégâts si sa cible est du même sexe. Par contre, il en inflige moins si sa cible est du sexe opposé' },
+        ],
+        types: [PokemonType.POISON],
+        faiblesses: [PokemonType.SOL, PokemonType.PSY],
+        evolutions: {
+            precedent: '029',
+            courant: '030',
+            suivant: '031',
+        }
+    },
+    {
+        numero: '030', nom: 'Nidorina', couleur: '#B7D2D8', generation: 1,
+        imageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/030.png',
+        description1: `On pense que sa corne frontale s’est atrophiée pour lui permettre de nourrir ses petits sans les blesser`,
+        description2: `Si un danger menace le groupe, ces Pokémon se réunissent et l’affrontent en émettant des ultrasons en chœur`,
+        taille: '0.8', categorie: 'Vénépic', poids: '20.0',
+        talents: [
+            { titre: 'Rivalité', description: 'Le Pokémon déteste la concurrence et inflige plus de dégâts si sa cible est du même sexe. Par contre, il en inflige moins si sa cible est du sexe opposé' },
+            { titre: 'Point Poison', description: 'Peut empoisonner l’attaquant lorsque le Pokémon subit une attaque directe' },
+        ],
+        types: [PokemonType.POISON],
+        faiblesses: [PokemonType.SOL, PokemonType.PSY],
+        evolutions: {
+            precedent: '029',
+            courant: '030',
+            suivant: '031',
+        }
+    },
+    {
+        numero: '031', nom: 'Nidoqueen', couleur: '#83ADC6', generation: 1,
+        imageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/031.png',
+        description1: `Il est plus doué pour se défendre que pour attaquer. Grâce à son blindage d’écailles, il protège ses petits de toute agression`,
+        description2: `Ce Pokémon calme les petits de son espèce en les plaçant entre ses épines dorsales. Dans ce cas, elles ne libèrent pas de poison`,
+        taille: '1.3', categorie: 'Perceur', poids: '60.0',
+        talents: [
+            { titre: 'Point Poison', description: 'Peut empoisonner l’attaquant lorsque le Pokémon subit une attaque directe' },
+            { titre: 'Rivalité', description: 'Le Pokémon déteste la concurrence et inflige plus de dégâts si sa cible est du même sexe. Par contre, il en inflige moins si sa cible est du sexe opposé' },
+        ],
+        types: [PokemonType.POISON, PokemonType.SOL],
+        faiblesses: [PokemonType.EAU, PokemonType.GLACE, PokemonType.SOL, PokemonType.PSY],
+        evolutions: {
+            precedent: '029',
+            courant: '030',
+            suivant: '031',
+        }
+    },
 ]

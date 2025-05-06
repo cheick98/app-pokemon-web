@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
+import { Component, inject } from '@angular/core'
 // my importations
 import { LoginService } from './core/services/login.service'
 import { HeaderComponent } from './layout/header/header.component'

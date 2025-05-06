@@ -6,6 +6,7 @@ import { IPokemon } from '../../models/pokemon.model'
 
 type PokemonState = {
   loading: boolean
+  loadingDetail: boolean
   error: string | null
   pokemons: IPokemon[]
   pokemon: IPokemon | null
@@ -19,6 +20,7 @@ export class PokemonService {
   // Initial data
   private state = signal<PokemonState>({
     loading: false,
+    loadingDetail: false,
     error: null,
     pokemons: [],
     pokemon: null
@@ -26,6 +28,7 @@ export class PokemonService {
 
   // Expose computed values
   loading = computed(() => this.state().loading)
+  loadingDetail = computed(() => this.state().loadingDetail)
   pokemons = computed(() => this.state().pokemons)
   pokemon = computed(() => this.state().pokemon)
   error = computed(() => this.state().error)
@@ -51,7 +54,7 @@ export class PokemonService {
   }
 
   getPokemonById(numero: string): Observable<IPokemon> {
-    this.setState({ loading: true, error: null })
+    this.setState({ loadingDetail: true, error: null })
 
     return new Observable<IPokemon>(subscriber => {
       const pokemon = data.find(p => p.numero === numero)
@@ -66,12 +69,27 @@ export class PokemonService {
       delay(500),
       tap({
         next: (pokemon) => {
-          this.setState({ pokemon, loading: false })
+          this.setState({ pokemon, loadingDetail: false })
         },
         error: () => {
-          this.setState({ error: "Désolé, ce pokémon n'existe pas dans notre base de donnée", loading: false })
+          this.setState({ error: "Désolé, ce pokémon n'existe pas dans notre base de donnée", loadingDetail: false })
         }
       })
     )
+  }
+
+  search(term: string): Observable<IPokemon[]> {
+    const delay = Math.round(Math.random() * 400) + 100
+    const filteredData = data.filter((item) =>
+      item.numero.toLowerCase().includes(term.toLowerCase()) ||
+      item.nom.toLowerCase().includes(term.toLowerCase())
+    )
+
+    return new Observable(observer => {
+      setTimeout(() => {
+        observer.next(filteredData)
+        observer.complete()
+      }, delay)
+    })
   }
 }
